@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarefas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="app">
+
+    <header class="app-header">
+      <h1>Tarefas</h1>
+      <p class="tagline">Organize o que precisa ser feito, uma tarefa de cada vez.</p>
+    </header>
+
+    <form id="task-form" class="task-form" autocomplete="off">
+      <input
+        type="text"
+        id="task-input"
+        placeholder="O que você precisa fazer?"
+        maxlength="120"
+        aria-label="Nova tarefa"
+      >
+      <button type="submit" class="btn-add" aria-label="Adicionar tarefa">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </button>
+    </form>
+
+    <div class="controls">
+      <div class="filters" role="tablist">
+        <button class="filter-btn is-active" data-filter="all" role="tab" aria-selected="true">Todas</button>
+        <button class="filter-btn" data-filter="pending" role="tab" aria-selected="false">Pendentes</button>
+        <button class="filter-btn" data-filter="done" role="tab" aria-selected="false">Concluídas</button>
+      </div>
+      <span id="pending-count" class="pending-count">0 pendentes</span>
+    </div>
+
+    <ul id="task-list" class="task-list"></ul>
+
+    <p id="empty-state" class="empty-state" hidden></p>
+
+    <footer class="app-footer">
+      <button id="clear-done" class="btn-clear" type="button">Limpar concluídas</button>
+    </footer>
+
+  </main>
+
+  <!-- Modelo de uma tarefa, usado pelo JavaScript para criar cada item da lista -->
+  <template id="task-template">
+    <li class="task-item" data-id="">
+      <button class="task-check" aria-label="Marcar como concluída">
+        <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 12 9 17 20 6"></polyline>
+        </svg>
+      </button>
+
+      <span class="task-text"></span>
+      <input class="task-edit-input" type="text" maxlength="120" hidden>
+
+      <div class="task-actions">
+        <button class="icon-btn btn-edit" aria-label="Editar tarefa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+          </svg>
+        </button>
+        <button class="icon-btn btn-delete" aria-label="Excluir tarefa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </li>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>

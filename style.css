@@ -1,0 +1,410 @@
+/* =========================================================
+   Variáveis de tema
+   ========================================================= */
+:root {
+  --color-bg: #f4f5f1;
+  --color-surface: #ffffff;
+  --color-border: #dfe2d9;
+  --color-ink: #20241f;
+  --color-ink-muted: #6e7568;
+  --color-accent: #3e6259;
+  --color-accent-hover: #2f4d45;
+  --color-accent-soft: #e7efe9;
+  --color-danger: #a6503d;
+  --color-danger-soft: #f5e7e3;
+  --color-done: #9aa391;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", Georgia, serif;
+
+  --radius: 8px;
+  --transition: 160ms ease;
+}
+
+/* =========================================================
+   Reset básico
+   ========================================================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   Estrutura geral
+   ========================================================= */
+.app {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 64px 24px 80px;
+}
+
+.app-header {
+  margin-bottom: 32px;
+  border-bottom: 2px solid var(--color-ink);
+  padding-bottom: 16px;
+}
+
+.app-header h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 2.25rem;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.tagline {
+  margin: 0;
+  color: var(--color-ink-muted);
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   Formulário de nova tarefa
+   ========================================================= */
+.task-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.task-form input {
+  flex: 1;
+  padding: 13px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 1rem;
+  transition: border-color var(--transition);
+}
+
+.task-form input::placeholder {
+  color: var(--color-ink-muted);
+}
+
+.task-form input:focus-visible {
+  border-color: var(--color-accent);
+}
+
+.btn-add {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius);
+  background: var(--color-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.btn-add svg {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-add:hover {
+  background: var(--color-accent-hover);
+}
+
+.btn-add:active {
+  transform: scale(0.94);
+}
+
+/* =========================================================
+   Filtros e contador
+   ========================================================= */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.filters {
+  display: flex;
+  gap: 4px;
+}
+
+.filter-btn {
+  padding: 6px 4px;
+  margin-right: 14px;
+  font-size: 0.9rem;
+  color: var(--color-ink-muted);
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.filter-btn:last-child {
+  margin-right: 0;
+}
+
+.filter-btn:hover {
+  color: var(--color-ink);
+}
+
+.filter-btn.is-active {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-accent);
+}
+
+.pending-count {
+  font-size: 0.85rem;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+
+/* =========================================================
+   Lista de tarefas
+   ========================================================= */
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+  animation: reveal 180ms ease;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 80px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+}
+
+.task-item.is-leaving {
+  animation: dismiss 160ms ease forwards;
+}
+
+@keyframes dismiss {
+  to {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+  }
+}
+
+/* Checkbox customizado */
+.task-check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1.5px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.task-check:hover {
+  border-color: var(--color-accent);
+}
+
+.check-icon {
+  width: 14px;
+  height: 14px;
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  transition: stroke-dashoffset 220ms ease;
+}
+
+.task-item.is-done .task-check {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.task-item.is-done .check-icon {
+  stroke-dashoffset: 0;
+}
+
+/* Texto da tarefa */
+.task-text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+  transition: color var(--transition);
+}
+
+.task-item.is-done .task-text {
+  color: var(--color-done);
+  text-decoration: line-through;
+  text-decoration-color: var(--color-done);
+}
+
+.task-edit-input {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--color-accent);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--color-ink);
+}
+
+/* Ações (editar / excluir) */
+.task-actions {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.task-item:hover .task-actions,
+.task-item:focus-within .task-actions {
+  opacity: 1;
+}
+
+.icon-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ink-muted);
+  transition: background var(--transition), color var(--transition);
+}
+
+.icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-edit:hover {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.btn-delete:hover {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+/* =========================================================
+   Estado vazio
+   ========================================================= */
+.empty-state {
+  padding: 40px 4px;
+  text-align: center;
+  color: var(--color-ink-muted);
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   Rodapé
+   ========================================================= */
+.app-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-clear {
+  font-size: 0.85rem;
+  color: var(--color-ink-muted);
+  padding: 6px 4px;
+  transition: color var(--transition);
+}
+
+.btn-clear:hover {
+  color: var(--color-danger);
+}
+
+.btn-clear:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.btn-clear:disabled:hover {
+  color: var(--color-ink-muted);
+}
+
+/* =========================================================
+   Responsivo
+   ========================================================= */
+@media (max-width: 480px) {
+  .app {
+    padding: 40px 18px 60px;
+  }
+
+  .app-header h1 {
+    font-size: 1.9rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pending-count {
+    align-self: flex-start;
+  }
+
+  .task-actions {
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   Acessibilidade: reduz animações se o usuário preferir
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .task-item,
+  .task-item.is-leaving,
+  .check-icon,
+  .btn-add {
+    animation: none;
+    transition: none;
+  }
+}
